@@ -1,0 +1,43 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h2>{{ operation }} Article</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            <label for="id_title">Title</label>
+            {{ form.title.errors }}
+            {{ form.title }}
+        </div>
+        <div>
+            <label for="id_slug">Slug</label>
+            {{ form.slug.errors }}
+            {{ form.slug }}
+        </div>
+        <div>
+            <label for="id_content">Content</label>
+            {{ form.content.errors }}
+            {{ form.content }}
+        </div>
+        <div>
+            <label for="id_image">Image</label>
+            {{ form.image.errors }}
+            {{ form.image }}
+        </div>
+        <div class="button-group">
+            <button type="submit" name="action" value="save" class="button-secondary">Save Draft</button>
+            <button type="submit" name="action" value="submit" class="button-primary">Submit for Review</button>
+            {% if request.user.groups.filter(name='Publisher').exists or request.user.groups.filter(name='Admin').exists %}
+                <button type="submit" name="action" value="publish" class="button-primary">Publish</button>
+            {% endif %}
+        </div>
+    </form>
+
+    {% if article and article.image %}
+        <section style="margin-top: 20px;">
+            <h3>Current image</h3>
+            <img class="article-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+        </section>
+    {% endif %}
+{% endblock %}

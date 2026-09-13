@@ -1,0 +1,19 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_username">Username</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="id_password">Password</label>
+            {{ form.password }}
+        </div>
+        <div class="button-group" style="margin-top: 16px;">
+            <button type="submit" class="button-primary">Login</button>
+        </div>
+    </form>
+{% endblock %}

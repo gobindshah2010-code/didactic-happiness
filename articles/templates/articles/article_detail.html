@@ -1,0 +1,25 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <article>
+        <h2>{{ article.title }}</h2>
+        <div class="article-meta">
+            By {{ article.author.get_username }} · {{ article.created_at|date:'M d, Y' }}
+            {% if article.status != 'published' %}
+                <span class="article-status">{{ article.get_status_display }}</span>
+            {% endif %}
+        </div>
+        {% if article.image %}
+            <img class="article-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+        {% endif %}
+        <div>{{ article.content|linebreaks }}</div>
+        <div class="button-group" style="margin-top:20px;">
+            {% if request.user == article.author or request.user.groups.filter(name='Publisher').exists or request.user.groups.filter(name='Admin').exists %}
+                <a class="button-secondary" href="{% url 'article_edit' article.slug %}">Edit</a>
+            {% endif %}
+            {% if article.status != 'published' and (request.user.groups.filter(name='Publisher').exists or request.user.groups.filter(name='Admin').exists) %}
+                <a class="button-primary" href="{% url 'publish_article' article.slug %}">Publish</a>
+            {% endif %}
+        </div>
+    </article>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h2>Pending Review</h2>
+    {% if articles %}
+        {% for article in articles %}
+            <article class="list-item">
+                <h2><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h2>
+                <div class="article-meta">
+                    By {{ article.author.get_username }} · {{ article.created_at|date:'M d, Y' }}
+                </div>
+                <p>{{ article.content|truncatewords:30 }}</p>
+                <div class="button-group">
+                    <a class="button-secondary" href="{% url 'article_edit' article.slug %}">Review</a>
+                    <a class="button-primary" href="{% url 'publish_article' article.slug %}">Publish</a>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p>There are no articles waiting for review.</p>
+    {% endif %}
+{% endblock %}
