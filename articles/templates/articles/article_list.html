@@ -20,9 +20,26 @@
                 <p>{{ article.content|truncatewords:40 }}</p>
                 <div class="button-group">
                     <a class="button-secondary" href="{% url 'article_detail' article.slug %}">Read more</a>
-                    {% if request.user == article.author or request.user.groups.filter(name='Publisher').exists or request.user.groups.filter(name='Admin').exists %}
-                        <a class="button-secondary" href="{% url 'article_edit' article.slug %}">Edit</a>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p>No articles available yet.</p>
+    {% endif %}
+{% endblock %}
+
+                        Read more
+                    </a>
+
+                    {% if request.user == article.author or request.user|has_group:"Publisher" or request.user|has_group:"Admin" %}
+
+                        <a class="button-secondary" href="{% url 'article_edit' article.slug %}">
+                            Edit
+                        </a>
+
                     {% endif %}
+
+</div>
                 </div>
             </article>
         {% endfor %}
