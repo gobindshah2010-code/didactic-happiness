@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure--u-&(+q6wwk+b#vh@8%&v)bvr72r0jegby35cub$#+=u0nj1+6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "didactic-happiness-mu.vercel.app",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
