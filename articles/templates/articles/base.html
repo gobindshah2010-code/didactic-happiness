@@ -37,6 +37,7 @@
             <p>Publish, review, and manage news stories with editor, publisher, and admin roles.</p>
         </div>
         <nav>
+            {% load group_tags %}
             <a href="{% url 'article_list' %}">Home</a>
             {% if request.user.is_authenticated and (request.user.groups.filter(name='Editor').exists or request.user.groups.filter(name='Publisher').exists or request.user.groups.filter(name='Admin').exists) %}
                 <a href="{% url 'article_create' %}">Create Article</a>
